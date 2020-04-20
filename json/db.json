@@ -1,0 +1,7 @@
+ "users": [
+    { "id":1 ,"username": "daniel", "password": "123" },
+    { "id":2 ,"username": "maor", "password": "1234" }
+  ],
+  "recipes": [
+    { "name": "Pasta Pomadoro", "category": "desserts"}
+]

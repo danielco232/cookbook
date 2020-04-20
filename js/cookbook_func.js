@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $("#login_button").click(function() {
-        let requestURL = "\\json\\n.json";
+        let requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
         let request = new XMLHttpRequest();
         request.open('GET', requestURL);
         request.responseType = 'json';

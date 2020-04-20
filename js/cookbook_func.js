@@ -1,24 +1,14 @@
 var is_logged_in = false;
 var data;
 
-
-
-$(document).ready(function(){
     const url = "http://raw.githubusercontent.com/danielco232/cookbook/master/json/db.json";
     let request = new XMLHttpRequest();
     request.open('GET', url);
     request.responseType = 'json';
     request.send();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            console.log(request);
-            console.log(request.response);
-        }
-    }
+    request.onload = function(){
+        data = request.response;
 
-    /*$.getJSON(url, function(result){
-        data = result;
-        
         $("#login_button").click(function() {
             let username = $("#username").val();
             let password = $("#password").val();
@@ -37,8 +27,12 @@ $(document).ready(function(){
                }
         });
     
-        $("#category").click(function(){
+        $(".category").click(function(){
+            window.location.href = "category.html";
             let category = $(this).text();
+
+            const recipes = data["recipes"];
+            alert(recipes)
     
             $("#title").text(category);
     
@@ -52,10 +46,10 @@ $(document).ready(function(){
                 }
             }
         });
-    });
+    }
 
 
-
+/*
     $("recipe").click(function(){
         let recipe = $(this).text();
 
@@ -63,4 +57,3 @@ $(document).ready(function(){
 
         $()
     });*/
-});

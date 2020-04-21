@@ -1,6 +1,6 @@
-if(window.location.href.split("/").pop() != "login.html" && !sessionStorage.getItem("username"))
+/*if(window.location.href.split("/").pop() != "login.html" && !sessionStorage.getItem("username"))
     window.location.href = "login.html";
-
+*/
 $(document).ready(function(){
     const url = "http://raw.githubusercontent.com/danielco232/cookbook/master/json/db.json";
     let request = new XMLHttpRequest();

@@ -2,7 +2,7 @@
     window.location.href = "login.html";
 */
 $(document).ready(function(){
-    const url = "http://raw.githubusercontent.com/danielco232/cookbook/master/json/db.json";
+    const url = "https://raw.githubusercontent.com/danielco232/cookbook/master/db.json";
     let request = new XMLHttpRequest();
     request.open('GET', url);
     request.responseType = 'json';
@@ -30,15 +30,10 @@ $(document).ready(function(){
 
         $(".category").click(function(){
             window.location.href = "category.html";
-            $(document).ready(function(){
             let category = $(this).text();
-
-            const recipes = data["recipes"];
-            alert(recipes)
-
             $("#title").text(category);
-
-            for(let i = 0; i < recipes.length; i++){
+            
+           /* for(let i = 0; i < recipes.length; i++){
                 if (recipes[i]["category"] == category){
                     $("#data").html("<div class='post-preview'>");
                     $("#data").html("<h3 class='post-title'><a href='recipe.html' id='recipe'>" + recipes[i]["name"] + "</a></h3>");
@@ -46,8 +41,7 @@ $(document).ready(function(){
                     $("#data").html("<p class='post-meta'>" + recipes[i]["calories"] + " calories per serving</p>");
                     $("#data").html("<hr></div>");
                 }
-            }
-        });
+            }*/
         });
     }
 

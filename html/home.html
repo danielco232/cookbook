@@ -15,12 +15,14 @@
 
   <!-- Custom styles for this template -->
   <link href="../bootstrap_files/css/clean-blog.min.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
   <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <a class="navbar-brand" href="#home">Home</a>
+        <a class="navbar-brand" href="home.html">Home</a>
         <div class="search">
           <input type="text" class="form-control" placeholder="Search" id="search">
         </div>
@@ -31,13 +33,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a href="#category" class="nav-link category">desserts</a>
+              <a class="nav-link category">desserts</a>
             </li>
             <li class="nav-item">
-              <a href="#category" class="nav-link category">soups</a>
+              <a class="nav-link category">soups</a>
             </li>
             <li class="nav-item">
-              <a href="#category" class="nav-link category">salads</a>
+              <a class="nav-link category">salads</a>
             </li>
           </ul>
         </div>
@@ -50,7 +52,7 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1 id="title">CookBook</h1>
+              <h1>CookBook</h1>
               <span class="subheading">healthy recipes</span>
             </div>
           </div>
@@ -61,41 +63,15 @@
     <!-- Main Content -->
     <div class="container">
       <div class="row">
-        <div data-role="Page" id="home">
-          <a href="#category" class="category">
-              <img src="../img/desserts.jpg" class="box">
-          </a>
-          <a href="#category" class="category">
-            <img src="../img/soups.jpg" class="box">
-          </a>
-          <a href="#category" class="category">
-            <img src="../img/salads.jpg" class="box">
-          </a>
-        </div>
-
-        <div data-role="Page" id="category">
-          <div class="col-lg-8 col-md-10 mx-auto"  id="data">
-            blabla
-          </div>
-        </div>
-
-        <div data-role="Page" id="recipe">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <h2 class="section-heading">Ingredients</h2>
-            <p id="ingredients"></p>
-            <h2 class="section-heading">Instructions</h2>
-            <p id="instructions"></p>
-            <img id="recipe_img">
-            <blockquote class="blockquote">Nutrition Facts Per Serving</blockquote>
-            <span id="servings" class="caption text-muted">Servings: </span>
-            <br>
-            <span id="cals" class="caption text-muted">Calories: </span>
-            <span id="fat" class="caption text-muted">Fat: </span>
-            <span id="carbs" class="caption text-muted">Carbohydrate: </span>
-            <span id="sugar" class="caption text-muted">Sugar: </span>
-            <span id="protein" class="caption text-muted">Protein: </span>
-          </div>
-        </div>
+        <a class="category">
+            <img src="../img/desserts.jpg" class="box">
+        </a>
+        <a class="category">
+          <img src="../img/soups.jpg" class="box">
+        </a>
+        <a class="category">
+          <img src="../img/salads.jpg" class="box">
+        </a>
       </div>
     </div>
 

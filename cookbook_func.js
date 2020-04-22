@@ -35,7 +35,7 @@ $(document).ready(function(){
                 
                 //user exists
                 if (sessionStorage.getItem("username"))
-                    window.location.href = "#home";
+                    window.location.href = "home.html";
                 //user doesn't exist    
                 else 
                     $("#message").text("username or password are incorrect.");
@@ -45,8 +45,8 @@ $(document).ready(function(){
             let html_str = "";
             let category = $(this).text();
             
-            window.location.href="#category";
-            $("#title").text(category);
+            window.location.href="category.html";
+            $("#category_name").text(category);
 
             //creates the string and adds it to the html file
             for(let i = 0; i < recipes.length; i++){
@@ -59,9 +59,7 @@ $(document).ready(function(){
         $("recipe").click(function(){
             let html_ingredients = "";
             let recipe = $(this).text();
-
-            window.location.href="#recipe";
-            $("#title").text(recipe);
+            $("#recipe_name").text(recipe);
     
             //finds the correct recipe from all
             for(var i = 0; i < recipes.length; i++){
@@ -90,8 +88,8 @@ $(document).ready(function(){
             if(e.which == 13) {
                 let search_str = $(".search").val();
 
-                window.location.href="#category";
-                $("#title").text(search_str);
+                window.location.href="category.html";
+                $("#category_name").text(search_str);
     
                 //creates the string and adds it to the html file
                 for(let i = 0; i < recipes.length; i++){

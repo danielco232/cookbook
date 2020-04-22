@@ -1,6 +1,6 @@
 /*if(window.location.href.split("/").pop() != "login.html" && !sessionStorage.getItem("username"))
     window.location.href = "login.html";
-
+*/
 
 function create_string(str,i){
     str += "<div class='post-preview'>";
@@ -9,7 +9,7 @@ function create_string(str,i){
     str += "<hr></div>";
     return str;
 }
-*/
+
 $(document).ready(function(){
     const url = "https://raw.githubusercontent.com/danielco232/cookbook/master/db.json";
     let request = new XMLHttpRequest();

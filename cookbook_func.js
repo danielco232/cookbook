@@ -11,6 +11,7 @@ function create_string(str,i){
 }
 
 $(document).ready(function(){
+    //gets the data from json file using http get request
     const url = "https://raw.githubusercontent.com/danielco232/cookbook/master/db.json";
     let request = new XMLHttpRequest();
     request.open('GET', url);
@@ -24,6 +25,7 @@ $(document).ready(function(){
             let username = $("#username").val();
             let password = $("#password").val();
 
+            //tries to find the user
             for(let i = 0; i < users.length; i++){
                     if (users[i]["username"] == username && users[i]["password"] == password){
                         sessionStorage.setItem("username", username);
@@ -31,33 +33,73 @@ $(document).ready(function(){
                     }
                 }
                 
+                //user exists
                 if (sessionStorage.getItem("username"))
                     window.location.href = "home.html";
-                else
+                //user doesn't exist    
+                else 
                     $("#message").text("username or password are incorrect.");
         });
 
         $(".category").click(function(){
-            //let str = "";
+            let html_str = "";
             let category = $(this).text();
+            
             window.location.href="category.html";
             $("#category_name").text(category);
-           /* for(let i = 0; i < recipes.length; i++){
+
+            //creates the string and adds it to the html file
+            for(let i = 0; i < recipes.length; i++){
                 if (recipes[i]["category"] == category)
-                    str = create_string(str,i)
+                    html_str = create_string(html_str,i)
             }
-            $("#data").html(str);
-            */
+            $("#data").html(html_str);
+        });
+
+        $("recipe").click(function(){
+            let html_ingredients = "";
+            let recipe = $(this).text();
+            $("#recipe_name").text(recipe);
+    
+            //finds the correct recipe from all
+            for(var i = 0; i < recipes.length; i++){
+                if (recipes[i]["name"] == recipe)
+                    break;
+            }
+            
+            //creates ingredients string
+            for(let j = 0; j < recipes[i]["ingredients"].length; j++)
+                html_ingredients += "* " + recipes[i]["ingredients"][j] + "<br>";
+            
+            //adds all data to the html file
+            $(".ingredients").html(html_ingredients);
+            $(".instructions").html(recipes[i]["instructions"]);
+            $(".recipe_img").attr("src", "../img/"+recipes[i]["img"]);
+            $(".servings").append(recipes[i]["nutrition_facts"]["servings"]);
+            $(".cals").append(recipes[i]["nutrition_facts"]["cals"]);
+            $(".fat").append(recipes[i]["nutrition_facts"]["fat"]);
+            $(".carb").append(recipes[i]["nutrition_facts"]["carbs"]);
+            $(".sugar").append(recipes[i]["nutrition_facts"]["sugar"]);
+            $(".protein").append(recipes[i]["nutrition_facts"]["protein"]);
+        });
+
+        $(".search").keypress(function(e){
+            //if user has pressed enter
+            if(e.which == 13) {
+                let search_str = $(".search").val();
+
+                window.location.href="category.html";
+                $("#category_name").text(search_str);
+    
+                //creates the string and adds it to the html file
+                for(let i = 0; i < recipes.length; i++){
+                    if (recipes[i]["name"].indexOf(search_str) >= 0)
+                        html_str = create_string(html_str,i)
+                }
+                if(html_str == "")
+                    html_str = "No mathed recipes."
+                $("#data").html(str);
+            }
         });
     }
-
-
-    /*
-    $("recipe").click(function(){
-        let recipe = $(this).text();
-
-        $("#title").text(recipe);
-
-        $()
-    });*/
 });

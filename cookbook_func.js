@@ -1,6 +1,5 @@
-/*if(window.location.href.split("/").pop() != "login.html" && !sessionStorage.getItem("username"))
+if(window.location.href.split("/").pop() != "login.html" && !sessionStorage.getItem("username"))
     window.location.href = "login.html";
-*/
 
 $(document).ready(function(){
     //gets the data from json file using http get request
@@ -36,7 +35,7 @@ $(document).ready(function(){
                 $("#servings").append(recipes[index]["nutrition_facts"]["servings"]);
                 $("#cals").append(recipes[index]["nutrition_facts"]["cals"]);
                 $("#fat").append(recipes[index]["nutrition_facts"]["fat"]+"g");
-                $("#carb").append(recipes[index]["nutrition_facts"]["carbs"]+"g");
+                $("#carbs").append(recipes[index]["nutrition_facts"]["carbs"]+"g");
                 $("#sugar").append(recipes[index]["nutrition_facts"]["sugar"]+"g");
                 $("#protein").append(recipes[index]["nutrition_facts"]["protein"]+"g");
         }
@@ -72,12 +71,12 @@ $(document).ready(function(){
 
         $(".category").click(function(){
             let matched_recipes = "";
-            let category = $(this).text();
-
+            let category = ($(this).html().split("/").pop()).split(".")[0];
+            
             //creates the string and saves it
             for(let i = 0; i < recipes.length; i++){
                 if (recipes[i]["category"] == category)
-                matched_recipes = create_string(matched_recipes,i)
+                    matched_recipes = create_string(matched_recipes,i);
             }
             sessionStorage.setItem("category",category);
             sessionStorage.setItem("matched_recipes",matched_recipes);
@@ -105,7 +104,7 @@ $(document).ready(function(){
 
                 //creates the string and saves it
                 for(let i = 0; i < recipes.length; i++){
-                    if (recipes[i]["name"].indexOf(search_str) >= 0)
+                    if (recipes[i]["name"].toLowerCase().indexOf(search_str.toLowerCase()) >= 0)
                     matched_recipes = create_string(matched_recipes,i)
                 }
                 if(matched_recipes == "")

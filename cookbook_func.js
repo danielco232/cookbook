@@ -2,14 +2,6 @@
     window.location.href = "login.html";
 */
 
-function create_string(str,i){
-    str += "<div class='post-preview'>";
-    str += "<h3 class='post-title'><a href='recipe.html' id='recipe'>" + recipes[i]["name"] + "</a></h3>";
-    str += "<p class='post-meta'>" + recipes[i]["calories"] + " calories per serving</p>";
-    str += "<hr></div>";
-    return str;
-}
-
 $(document).ready(function(){
     //gets the data from json file using http get request
     const url = "https://raw.githubusercontent.com/danielco232/cookbook/master/db.json";
@@ -20,6 +12,43 @@ $(document).ready(function(){
     request.onload = function(){
         const users = request.response["users"];
         const recipes = request.response["recipes"];
+
+        //loads data from sessionStorage into correct html page by url
+        switch (window.location.href.split("/").pop()){
+            case "category.html":
+                $("#category_name").text(sessionStorage.getItem("category"));
+                $("#data").html(sessionStorage.getItem("matched_recipes"));
+                break;
+
+            case "recipe.html":
+                let ingredients_str = "";
+                let index = sessionStorage.getItem("data_idx");
+                $("#recipe_name").text(recipes[index]["name"]);
+
+                //creates ingredients string
+                for(let i = 0; i < recipes[index]["ingredients"].length; i++)
+                ingredients_str += "* " + recipes[index]["ingredients"][i] + "<br>";
+        
+                //adds all data to the html file  
+                $("#ingredients").html(ingredients_str);
+                $("#instructions").html(recipes[index]["instructions"]);
+                $("#recipe_img").attr("src", "../img/"+recipes[index]["img"]);
+                $("#servings").append(recipes[index]["nutrition_facts"]["servings"]);
+                $("#cals").append(recipes[index]["nutrition_facts"]["cals"]);
+                $("#fat").append(recipes[index]["nutrition_facts"]["fat"]+"g");
+                $("#carb").append(recipes[index]["nutrition_facts"]["carbs"]+"g");
+                $("#sugar").append(recipes[index]["nutrition_facts"]["sugar"]+"g");
+                $("#protein").append(recipes[index]["nutrition_facts"]["protein"]+"g");
+        }
+
+        //creates the html with the recipes names
+        function create_string(str,index){
+            str += "<div class='post-preview'>";
+            str += "<h3 class='post-title'><a href='recipe.html' class='recipe'>" + recipes[index]["name"] + "</a></h3>";
+            str += "<p class='post-meta'>" + recipes[index]["nutrition_facts"]["cals"] + " calories per serving</p>";
+            str += "<hr></div>";
+            return str;
+        }
 
         $("#login_button").click(function() {
             let username = $("#username").val();
@@ -42,63 +71,50 @@ $(document).ready(function(){
         });
 
         $(".category").click(function(){
-            let html_str = "";
+            let matched_recipes = "";
             let category = $(this).text();
-            
-            window.location.href="category.html";
-            $("#category_name").text(category);
 
-            //creates the string and adds it to the html file
+            //creates the string and saves it
             for(let i = 0; i < recipes.length; i++){
                 if (recipes[i]["category"] == category)
-                    html_str = create_string(html_str,i)
+                matched_recipes = create_string(matched_recipes,i)
             }
-            $("#data").html(html_str);
+            sessionStorage.setItem("category",category);
+            sessionStorage.setItem("matched_recipes",matched_recipes);
         });
 
-        $("recipe").click(function(){
-            let html_ingredients = "";
+        $(".recipe").click(function(){
             let recipe = $(this).text();
-            $("#recipe_name").text(recipe);
-    
-            //finds the correct recipe from all
+            
+            //finds the correct recipe from all and saves it's index
             for(var i = 0; i < recipes.length; i++){
-                if (recipes[i]["name"] == recipe)
+                if (recipes[i]["name"] == recipe){
+                    sessionStorage.setItem("data_idx",i);
                     break;
+                }
             }
+
             
-            //creates ingredients string
-            for(let j = 0; j < recipes[i]["ingredients"].length; j++)
-                html_ingredients += "* " + recipes[i]["ingredients"][j] + "<br>";
-            
-            //adds all data to the html file
-            $(".ingredients").html(html_ingredients);
-            $(".instructions").html(recipes[i]["instructions"]);
-            $(".recipe_img").attr("src", "../img/"+recipes[i]["img"]);
-            $(".servings").append(recipes[i]["nutrition_facts"]["servings"]);
-            $(".cals").append(recipes[i]["nutrition_facts"]["cals"]);
-            $(".fat").append(recipes[i]["nutrition_facts"]["fat"]);
-            $(".carb").append(recipes[i]["nutrition_facts"]["carbs"]);
-            $(".sugar").append(recipes[i]["nutrition_facts"]["sugar"]);
-            $(".protein").append(recipes[i]["nutrition_facts"]["protein"]);
         });
 
-        $(".search").keypress(function(e){
+        $("#search").keypress(function(e){
             //if user has pressed enter
             if(e.which == 13) {
-                let search_str = $(".search").val();
+                let matched_recipes = "";
+                let search_str = $("#search").val();
 
-                window.location.href="category.html";
-                $("#category_name").text(search_str);
-    
-                //creates the string and adds it to the html file
+                //creates the string and saves it
                 for(let i = 0; i < recipes.length; i++){
                     if (recipes[i]["name"].indexOf(search_str) >= 0)
-                        html_str = create_string(html_str,i)
+                    matched_recipes = create_string(matched_recipes,i)
                 }
-                if(html_str == "")
-                    html_str = "No mathed recipes."
-                $("#data").html(str);
+                if(matched_recipes == "")
+                    matched_recipes = "No matched recipes."
+                
+                sessionStorage.setItem("category",search_str);
+                sessionStorage.setItem("matched_recipes",matched_recipes);
+
+                window.location.href = "category.html";
             }
         });
     }
